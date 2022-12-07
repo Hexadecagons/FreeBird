@@ -118,7 +118,7 @@ function Network.processEvent(Message: string,...: any)
     if not PassedTypeCheck then return end
 
     -- Make sure it's not throttled.
-    if Network.processThrottlingCheck() then return end
+    if not Network.processThrottlingCheck(Message) then return end
 
     -- Call the appropriate functions.
     for _,Function in pairs(Listeners) do Function(...) end
@@ -137,7 +137,7 @@ function Network.processInvoke(Message: string,...: any)
     if not PassedTypeCheck then return end
 
     -- Make sure it's not throttled.
-    if Network.processThrottlingCheck() then return end
+    if not Network.processThrottlingCheck(Message) then return end
 
     -- Call the listener function and return results.
     return Listener(...)

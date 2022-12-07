@@ -11,7 +11,7 @@ return {
 
     --[[ DETAILS ]]--
 
-    BUILD_STRING                    = "v0.2";
+    BUILD_STRING                    = "v0.4";
 
     --[[ CUSTOMIZATION ]]--
 

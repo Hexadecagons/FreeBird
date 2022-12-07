@@ -48,7 +48,7 @@ local FreeBird = {}
 ]=]
 function FreeBird:init()
 
-    self:print("FreeBird "..FreeBirdConfig.BUILD_STRING)
+    self:print("FreeBird "..(RunService:IsClient() and "Client" or "Server"))
     self:print("Loading Util")
 
     -- Load utility modules.
@@ -76,6 +76,7 @@ function FreeBird:init()
     self:initializeQueuedModules()
 
     self:print("Ready! ^.^")
+    self:print("Signature : #"..self:generateSignature())
 end
 
 --- Attempt to load a given module.
@@ -180,6 +181,53 @@ end
 function FreeBird:warn(Message: string)
 
     print((RunService:IsClient() and FreeBirdConfig.PREFIXES.Client or FreeBirdConfig.PREFIXES.Server)..FreeBirdConfig.PREFIXES.FreeBird..FreeBirdConfig.PREFIXES.Warn.." "..Message)
+end
+
+--- @private
+--- Generates a 'signature' for FreeBird's current verison.
+function FreeBird:generateSignature()
+
+    local function CharsToByte(String: string)
+
+        local Bytes = 0
+
+        for i = 1, #String do
+
+            Bytes = Bytes + string.byte(string.sub(String,i,i))
+        end
+
+        return tonumber(Bytes)
+    end
+
+    local Signature = 0
+    for _,Module in pairs(LoadedModules) do
+
+        for Key,Value in pairs(Module) do
+
+            if type(Key) == "string" then
+
+                Signature = Signature + CharsToByte(Key)
+            end
+
+            if type(Value) == "string" then
+
+                Signature = Signature + CharsToByte(Value)
+            elseif type(Value) == "number" then
+
+                Signature = Signature + Value
+            end
+        end
+    end
+
+    Signature = math.floor(Signature)
+
+    local Text = ""
+    for i = 1,#tostring(Signature) do
+
+        Text = Text .. string.char(65+tonumber(string.sub(Signature,i,i)))
+    end
+
+    return Text
 end
 
 return FreeBird

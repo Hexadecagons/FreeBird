@@ -9,10 +9,6 @@
 
 return {
 
-    --[[ DETAILS ]]--
-
-    BUILD_STRING                    = "v0.4";
-
     --[[ CUSTOMIZATION ]]--
 
     PREFIXES = {

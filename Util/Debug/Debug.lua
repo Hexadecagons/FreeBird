@@ -105,7 +105,7 @@ function Debug:drawValue(Key: string, Object: Instance, ValueFunction: Function,
     local CardTemplate         = Assets.UI:FindFirstChild("DebugStatCard")
     if not ContainerTemplate or not CardTemplate then self:warn("Debug UI is missing in the current place. Make sure DebugStatContainer and DebugStatCard are present.") end
 
-    if ExtraParameters.ValueOnly then
+    if ExtraParameters and ExtraParameters.ValueOnly then
 
         CardTemplate = Assets.UI:FindFirstChild("DebugStatValueOnlyCard")
     end
@@ -139,6 +139,9 @@ function Debug:drawValue(Key: string, Object: Instance, ValueFunction: Function,
 
     -- Display key.
     if Card:FindFirstChild("Key") then Card.Key.Text = Key end
+
+    -- Initially display value.
+    Card.Frame.Value.Text = tostring(ValueFunction())
 
     -- Create connection to display value.
     local Connection = RunService.Heartbeat:Connect(function()

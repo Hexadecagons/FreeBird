@@ -64,8 +64,8 @@ end
 --- 'Typewrite' text onto a target instance with a ``Text`` property.
 --- @param Target Instance -- Instance with .Text property to write onto.
 --- @param Text string -- The text to write in.
---- @param WPM number -- Words per minute to type the text out at
-function StringUtil:typeWrite(Target: Instance, Text: string, WPM: number)
+--- @param KPS number -- Keys per second to type the text out at
+function StringUtil:typeWrite(Target: Instance, Text: string, KPS: number)
 
     -- We don't want this function call to yield, so defer it to a new thread.
     task.defer(function()
@@ -75,7 +75,7 @@ function StringUtil:typeWrite(Target: Instance, Text: string, WPM: number)
             Target.Text = Text:sub(1,i)
 
             -- Wait interval between letters to type in order at desired KPS.
-            task.wait(1/WPM)
+            task.wait(1/KPS)
         end
     end)
 end

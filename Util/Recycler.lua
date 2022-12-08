@@ -9,7 +9,7 @@ local Recycler = {
 --- Generate a pool of a custom object.
 --- @param PoolName string -- Name of the pool.
 --- @param Object any -- Object to populate the pool with.
---- @Param Amount number -- Number of objects in pool.
+--- @param Amount number -- Number of objects in pool.
 function Recycler:generatePool(PoolName: string, Object: any, Amount: number)
 
     -- Instantiate table for the pool.
@@ -20,10 +20,12 @@ function Recycler:generatePool(PoolName: string, Object: any, Amount: number)
 
     -- Populate pool with objects.
     for i = 1, Amount do table.insert(Pool,Object:Clone()) end
+
+    Debug:print("Generated Pool: "..PoolName.." with "..Amount.." objects!",{Prefix = "🏊"})
 end
 
 --- Get custom object from pool.
---- @Param PoolName -- Name of pool.
+--- @param PoolName string -- Name of pool.
 function Recycler:getFromPool(PoolName: string)
 
     -- Make sure the pool exists.
@@ -41,6 +43,12 @@ function Recycler:getFromPool(PoolName: string)
 
     -- Return object
     return Object
+end
+
+--- Return all objects in pool.
+function Recycler:getObjectsInPool(PoolName: string)
+
+    return self.Pool[PoolName]
 end
 
 --- Syntax sugar for just parenting object to nil.

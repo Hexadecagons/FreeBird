@@ -45,19 +45,15 @@ function Maid:cleanup()
     -- Go through all tasks and handle each task appropriately.
     for _,Task in pairs(self.Tasks) do
 
-        -- Destroy instances.
-        if type(Task) == "userdata" then
-
-            Task:Destroy()
-        elseif type(Task) == "function" then
+        if type(Task) == "function" then
 
             -- Call functions.
             Task()
-        elseif Task.Disconnect then
+        elseif type(Task) == "table" and Task.Disconnect or typeof(Task) == "RBXScriptConnection" then
 
             -- Disconnect events.
             Task:Disconnect()
-        elseif Task.Destroy then
+        elseif type(Task) == "table" and Task.Destroy or type(Task) == "userdata" then
 
             -- Deconstruct classes.
             Task:Destroy()
